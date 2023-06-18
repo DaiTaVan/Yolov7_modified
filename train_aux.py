@@ -464,30 +464,36 @@ def train(hyp, opt, device, tb_writer=None):
 
                 # Save last, best and delete
                 torch.save(ckpt, last)
-                api.upload_file(
-
-                          path_or_fileobj= last,
-
-                          path_in_repo="last.pt",
-
-                          repo_id="daitavan/image-tagging",
-
-                          repo_type="dataset",
-
-                      )
-                if best_fitness == fi:
-                    torch.save(ckpt, best)
+                try: 
                     api.upload_file(
 
-                          path_or_fileobj= best,
+                            path_or_fileobj= last,
 
-                          path_in_repo="best.pt",
+                            path_in_repo="last.pt",
 
-                          repo_id="daitavan/image-tagging",
+                            repo_id="daitavan/image-tagging",
 
-                          repo_type="dataset",
+                            repo_type="dataset",
 
-                      )
+                        )
+                except:
+                    print("Cannot save to huggingface")
+                if best_fitness == fi:
+                    torch.save(ckpt, best)
+                    try:
+                        api.upload_file(
+
+                            path_or_fileobj= best,
+
+                            path_in_repo="best.pt",
+
+                            repo_id="daitavan/image-tagging",
+
+                            repo_type="dataset",
+
+                        )
+                    except:
+                        print("Cannot save to huggingface")
                 if (best_fitness == fi) and (epoch >= 200):
                     torch.save(ckpt, wdir / 'best_{:03d}.pt'.format(epoch))
                 if epoch == 0:
@@ -571,7 +577,7 @@ if __name__ == '__main__':
     parser.add_argument('--single-cls', action='store_true', help='train multi-class data as single-class')
     parser.add_argument('--adam', action='store_true', help='use torch.optim.Adam() optimizer')
     parser.add_argument('--sync-bn', action='store_true', help='use SyncBatchNorm, only available in DDP mode')
-    parser.add_argument('--local_rank', type=int, default=-1, help='DDP parameter, do not modify')
+    # parser.add_argument('--local_rank', type=int, default=-1, help='DDP parameter, do not modify')
     parser.add_argument('--workers', type=int, default=8, help='maximum number of dataloader workers')
     parser.add_argument('--project', default='runs/train', help='save to project/name')
     parser.add_argument('--entity', default=None, help='W&B entity')
@@ -590,6 +596,7 @@ if __name__ == '__main__':
     # Set DDP variables
     opt.world_size = int(os.environ['WORLD_SIZE']) if 'WORLD_SIZE' in os.environ else 1
     opt.global_rank = int(os.environ['RANK']) if 'RANK' in os.environ else -1
+    opt.local_rank = int(os.environ["LOCAL_RANK"])
     set_logging(opt.global_rank)
     #if opt.global_rank in [-1, 0]:
     #    check_git_status()
