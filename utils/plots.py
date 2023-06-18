@@ -487,3 +487,16 @@ def plot_skeleton_kpts(im, kpts, steps, orig_shape=None):
         if pos2[0] % 640 == 0 or pos2[1] % 640 == 0 or pos2[0]<0 or pos2[1]<0:
             continue
         cv2.line(im, pos1, pos2, (int(r), int(g), int(b)), thickness=2)
+
+
+
+# addition
+# Add module
+import torchshow as ts
+# -------------------------------------------------------------------------
+# Add plot_ts_feature_maps method at the bottom
+def plot_ts_feature_maps(feature_maps):
+    import matplotlib
+    matplotlib.use('TkAgg')
+    feature_maps = feature_maps.to(torch.float32)
+    ts.show(feature_maps[0])

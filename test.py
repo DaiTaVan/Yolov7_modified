@@ -351,3 +351,8 @@ if __name__ == '__main__':
             np.savetxt(f, y, fmt='%10.4g')  # save
         os.system('zip -r study.zip study_*.txt')
         plot_study_txt(x=x)  # plot
+
+
+# python test.py --data data/image_tagging_data.yaml --img 1280 --batch 32 --conf 0.001 --iou 0.65 --device 1 --weights runs/train/image-tagging-w6-v3/weights/best.pt --name yolov7_1280_val --device 1 --save-txt --save-hybrid --save-conf --save-json
+# python test.py --data data/image_tagging_data.yaml --img 1280 --batch 32 --conf 0.8 --iou 0.65 --device 1 --weights runs/train/image-tagging-w6-v3/weights/best.pt --name yolov7_1280_val_conf_0.8 --device 1 --save-txt --save-hybrid --save-conf --save-json
+# python test.py --data data/image_tagging_data.yaml --img 1280 --batch 32 --conf 0.8 --iou 0.65 --device 1 --weights runs/train/image-tagging-w6-v3/weights/best.pt --name yolov7_1280_test_conf_0.8 --device 1 --save-txt --save-hybrid --save-conf --save-json --task test

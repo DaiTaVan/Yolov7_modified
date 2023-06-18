@@ -789,6 +789,7 @@ def parse_model(d, ch):  # model_dict, input_channels(3)
             c2 = ch[f] // 2
         elif m in [Detect, IDetect, IAuxDetect, IBin, IKeypoint]:
             args.append([ch[x] for x in f])
+            print(args)
             if isinstance(args[1], int):  # number of anchors
                 args[1] = [list(range(args[1] * 2))] * len(f)
         elif m is ReOrg:
@@ -825,6 +826,7 @@ if __name__ == '__main__':
 
     # Create model
     model = Model(opt.cfg).to(device)
+    # print(model)
     model.train()
     
     if opt.profile:

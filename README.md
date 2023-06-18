@@ -138,6 +138,22 @@ python detect.py --weights yolov7.pt --conf 0.25 --img-size 640 --source yourvid
 On image:
 ``` shell
 python detect.py --weights yolov7.pt --conf 0.25 --img-size 640 --source inference/images/horses.jpg
+
+python detect.py --weights best.pt --conf 0.8 --img-size 1280 --source custom_data/images/test  inference/images/test1.png --save-txt 
+```
+
+## Trial
+
+On video:
+``` shell
+python detect.py --weights yolov7.pt --conf 0.25 --img-size 640 --source yourvideo.mp4
+```
+
+On image:
+``` shell
+python detect.py --weights yolov7.pt --conf 0.25 --img-size 640 --source inference/images/horses.jpg
+
+python trial.py --weights best.pt --conf 0.8 --img-size 1280 --source inference/images/test1.png --save-txt 
 ```
 
 <div align="center">
